@@ -2,6 +2,4 @@
 
 Hello, If you are in my old server i have given that server to a random guy that dm'd me
 
-My Discord | Gian!#1111
-
-Don't know the point of adding me because i dont accept anyone now
+My Discord | Gian!#5355
