@@ -11,6 +11,7 @@ end
 UserSettings().GameSettings.MasterVolume = 0
 local Crashed = false
 if Testing == false then
+	setfpscap(5)
 	main = Instance.new("ScreenGui")
 	Frame = Instance.new("Frame")
 	TextLabel = Instance.new("TextLabel")
