@@ -8,6 +8,7 @@ end
 if game.Players.LocalPlayer.Name == getgenv().HostUser or getgenv().Executed then
 	return
 end
+setfpscap(5)
 UserSettings().GameSettings.MasterVolume = 0
 local Crashed = false
 if Testing == false then
