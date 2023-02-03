@@ -462,16 +462,16 @@ local function Initiate()
 				game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 			elseif Args[1] == ".unfreeze" then
 				game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-            elseif Args[1] == ".underground on" then
+            elseif Args[1] == ".underground_on" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,-7,0)
 
                 local BP = Instance.new("BodyPosition",game.Players.LocalPlayer.Character.HumanoidRootPart)
-                BP.Name = "AirLockBP"
+                BP.Name = "under"
                 BP.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
                 BP.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-            elseif Args[1] == ".underground off" then
+            elseif Args[1] == ".underground_off" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0, 10,0)
-                local BP = game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("AirLockBP")
+                local BP = game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("under")
                 BP:Destroy()
 			elseif Args[1] == ".crash" and Args[2] == "15min" and not Crashed then
 				local Player = GetPlayerFromString(Args[3],true)
