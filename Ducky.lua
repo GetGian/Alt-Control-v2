@@ -688,20 +688,6 @@ local function Initiate()
 	end)
 end
 
-noClipped = true
-
-game:GetService("RunService").Stepped:Connect(function()
-   if noClipped then
-       pcall(function()
-           for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-               if v.ClassName == "Part" or v.ClassName == "MeshPart" then
-                   v.CanCollide = false
-               end
-           end
-       end)
-   end
-end)
-
 if Host then
 	Initiate()
 end
