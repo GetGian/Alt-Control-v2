@@ -1,5 +1,20 @@
 local Testing = false
--- Cmds
+
+noClipped = true
+
+game:GetService("RunService").Stepped:Connect(function()
+   if noClipped then
+       pcall(function()
+           for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+               if v.ClassName == "Part" or v.ClassName == "MeshPart" then
+                   v.CanCollide = false
+               end
+           end
+       end)
+   end
+end)
+
+
 if table.find(getgenv().Alts,game.Players.LocalPlayer.UserId) then
 	getgenv().PointInTable = table.find(getgenv().Alts,game.Players.LocalPlayer.UserId)
 else
@@ -454,28 +469,21 @@ local function Initiate()
 					wait(1)
 					setfpscap(60)	
 				end
-			elseif Args[1] == ".crash" and Args[2] == "encrypt" and not Crashed then
-				local Player = GetPlayerFromString(Args[3],true)
-				if Player and Player == game.Players.LocalPlayer then
-					if game.CoreGui:FindFirstChild("RenderScreen") then
-						game.CoreGui.RenderScreen:Destroy()
-					end
-					game:GetService("RunService"):Set3dRenderingEnabled(true)
-					Crashed = true
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/remorseW/encryptW/main/CustomEncryptCrasher.lua"))()
+			elseif Args[1] == ".freeze" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+			elseif Args[1] == ".unfreeze" then
+				game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+            elseif Args[1] == ".underground on" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,-7,0)
 
-					for Index,Var in pairs(CmdSettings) do
-						CmdSettings[Var] = nil
-					end
-					CmdSettings = {}
-					setfpscap(60)
-					wait(1)
-					setfpscap(60)
-					wait(1)
-					setfpscap(60)
-					wait(1)
-					setfpscap(60)	
-				end
+                local BP = Instance.new("BodyPosition",game.Players.LocalPlayer.Character.HumanoidRootPart)
+                BP.Name = "AirLockBP"
+                BP.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+                BP.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+            elseif Args[1] == ".underground off" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0, 10,0)
+                local BP = game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("AirLockBP")
+                BP:Destroy()
 			elseif Args[1] == ".crash" and Args[2] == "15min" and not Crashed then
 				local Player = GetPlayerFromString(Args[3],true)
 				if Player and Player == game.Players.LocalPlayer then
