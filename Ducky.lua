@@ -55,6 +55,7 @@ if Testing == false then
 		vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 	end)
 	game:GetService("RunService"):Set3dRenderingEnabled(false)
+	game:GetService("RunService"):SetRobloxGuiFocused(false)
 	setfpscap(5)
 end
 
