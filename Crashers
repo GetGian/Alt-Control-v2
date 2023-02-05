@@ -1,0 +1,54 @@
+getgenv().Host = "B0_0PS"
+
+
+-- init
+if not game:IsLoaded() then
+   game.Loaded:Wait();
+end
+
+-- variables
+local players, replicatedStorage = game:GetService("Players"), game:GetService("ReplicatedStorage");
+local defaultChatSystemChatEvents = replicatedStorage:FindFirstChild("DefaultChatSystemChatEvents");
+
+local onMessageDoneFiltering = defaultChatSystemChatEvents:FindFirstChild("OnMessageDoneFiltering");
+
+-- main
+onMessageDoneFiltering.OnClientEvent:Connect(function(messageData)
+local speaker, message = players[messageData.FromSpeaker], messageData.Message
+if speaker.Name == Host and message == ".crash" then
+   for _, tool in ipairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+      if tool:IsA("Tool") then
+         tool.Parent = game:GetService("Players").LocalPlayer.Character
+      end
+   end
+   task.wait(.5)
+   for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+      if v:IsA("MeshPart") then
+         v:Destroy()
+      end
+   end
+end
+end);
+
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local WindowFocusReleasedFunction = function()
+RunService:Set3dRenderingEnabled(false)
+setfpscap(4)
+return
+end
+
+local WindowFocusedFunction = function()
+RunService:Set3dRenderingEnabled(true)
+setfpscap(360)
+return
+end
+
+local Initialize = function()
+UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
+UserInputService.WindowFocused:Connect(WindowFocusedFunction)
+return
+end
+
+Initialize()
