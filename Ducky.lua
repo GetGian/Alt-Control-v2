@@ -4,17 +4,6 @@ if table.find(getgenv().Alts,game.Players.LocalPlayer.UserId) then
 	getgenv().PointInTable = table.find(getgenv().Alts,game.Players.LocalPlayer.UserId)
 	setfpscap(4) -- because sometimes the other setfpscap doesnt work on some accounts
 	
--- Noclip
-	game:GetService("RunService").Stepped:Connect(function()
-	       pcall(function()
-		   for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-		       if v.ClassName == "Part" or v.ClassName == "MeshPart" then
-			   v.CanCollide = false
-		       end
-		   end
-	       end)
-	end)
-	
 else
 	return
 end
@@ -71,8 +60,19 @@ end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v2/main/AC.lua"))()
 
-
 getgenv().Executed = true
+
+
+-- // Noclip --/
+game:GetService("RunService").Stepped:Connect(function()
+	pcall(function()
+	for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+		if v.ClassName == "Part" or v.ClassName == "MeshPart" then
+		v.CanCollide = false
+		end
+	end
+	end)
+end)
 
 --// Main Code --//
 
@@ -352,7 +352,6 @@ local function Setup(Type,Debugmode)
 
 end
 
-
 local function ShowWallet()
 	local Player = game.Players.LocalPlayer
 	if Player.Backpack:FindFirstChild("Wallet") then
@@ -571,7 +570,7 @@ local function Initiate()
 				if CurrAnim and CurrAnim.IsPlaying then
 					CurrAnim:Stop()
 				end
-			elseif Message == ".maskon" then
+			elseif Message == ".mask on" then
 				local plr = game.Players.LocalPlayer
 				local c = plr.Character
 				local Root = c.PrimaryPart
@@ -579,8 +578,8 @@ local function Initiate()
 
 				local Tries = 0 
 				repeat wait(0.1) Tries += 1
-					Root.CFrame = workspace.Ignored.Shop["[Surgeon Mask] - $25"].Head.CFrame*CFrame.new(math.random(-1,1),0,math.random(-1,1))
-					fireclickdetector(workspace.Ignored.Shop["[Surgeon Mask] - $25"].ClickDetector)
+					Root.CFrame = workspace.Ignored.Shop["[Surgeon Mask] - $26"].Head.CFrame*CFrame.new(math.random(-1,1),0,math.random(-1,1))
+					fireclickdetector(workspace.Ignored.Shop["[Surgeon Mask] - $26"].ClickDetector)
 				until Tries >= 50 or not c or not c:FindFirstChild("Humanoid") or c:FindFirstChild"Mask" or plr.Backpack:FindFirstChild"Mask"
 				wait(0.5)
 				if plr.Backpack:FindFirstChild("Mask") then
@@ -590,7 +589,7 @@ local function Initiate()
 					c.Mask:Activate()
 				end
 				Root.CFrame = OldCF
-			elseif Message == ".maskoff" then
+			elseif Message == ".mask off" then
 				local plr = game.Players.LocalPlayer
 				local c = plr.Character
 				local Root = c.PrimaryPart
