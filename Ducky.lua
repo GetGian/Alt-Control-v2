@@ -1,20 +1,30 @@
 local Testing = false
 
-
-
 if table.find(getgenv().Alts,game.Players.LocalPlayer.UserId) then
 	getgenv().PointInTable = table.find(getgenv().Alts,game.Players.LocalPlayer.UserId)
+	setfpscap(4) -- because sometimes the other setfpscap doesnt work on some accounts
+	
+-- Noclip
+	game:GetService("RunService").Stepped:Connect(function()
+	       pcall(function()
+		   for i, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+		       if v.ClassName == "Part" or v.ClassName == "MeshPart" then
+			   v.CanCollide = false
+		       end
+		   end
+	       end)
+	end)
+	
 else
 	return
 end
 if game.Players.LocalPlayer.Name == getgenv().HostUser or getgenv().Executed then
 	return
 end
-setfpscap(5)
 UserSettings().GameSettings.MasterVolume = 0
 local Crashed = false
 if Testing == false then
-	setfpscap(5)
+	setfpscap(4)
 	main = Instance.new("ScreenGui")
 	Frame = Instance.new("Frame")
 	TextLabel = Instance.new("TextLabel")
@@ -43,7 +53,7 @@ if Testing == false then
 	TextLabel.Text = "Welcome, "..game.Players.LocalPlayer.Name
 	TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	TextLabel.TextScaled = false
-	TextLabel.TextSize = 19.000
+	TextLabel.TextSize = 25.000
 	TextLabel.TextWrapped = false
 	if not game:IsLoaded() then
 		repeat wait(.1) until game:IsLoaded() 
@@ -56,7 +66,7 @@ if Testing == false then
 	end)
 	game:GetService("RunService"):Set3dRenderingEnabled(false)
 	game:GetService("RunService"):SetRobloxGuiFocused(false)
-	setfpscap(5)
+	setfpscap(4) -- Another precaution
 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v2/main/AC.lua"))()
@@ -64,7 +74,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v
 
 getgenv().Executed = true
 
---// Code --//
+--// Main Code --//
 
 local Connections = {}
 
@@ -213,7 +223,7 @@ end
 local BringLocations = {
 	["bank"] = CFrame.new(-396.988922, 21.7570763, -293.929779, -0.102468058, -1.9584887e-09, -0.994736314, 7.23731564e-09, 1, -2.71436984e-09, 0.994736314, -7.47735651e-09, -0.102468058),
 	["admin"] = CFrame.new(-872.453674, -32.6421318, -532.476379, 0.999682248, -1.36019978e-08, 0.0252073351, 1.33811247e-08, 1, 8.93094043e-09, -0.0252073351, -8.59080007e-09, 0.999682248),
-	["klub"] = CFrame.new(-264.434479, 0.0355005264, -430.854736, -0.999828756, 9.58909574e-09, -0.0185054261, 9.92017934e-09, 1, -1.77993904e-08, 0.0185054261, -1.79799198e-08, -0.999828756),	
+	["club"] = CFrame.new(-264.434479, 0.0355005264, -430.854736, -0.999828756, 9.58909574e-09, -0.0185054261, 9.92017934e-09, 1, -1.77993904e-08, 0.0185054261, -1.79799198e-08, -0.999828756),	
 	["vault"] = CFrame.new(-495.485901, 23.1428547, -284.661713, -0.0313318223, -4.10440322e-08, 0.999509037, 2.18453966e-08, 1, 4.17489829e-08, -0.999509037, 2.31427428e-08, -0.0313318223),
 	["train"] = CFrame.new(591.396118, 34.5070686, -146.159561, 0.0698467195, -4.91725913e-08, -0.997557759, 5.03374231e-08, 1, -4.57684664e-08, 0.997557759, -4.70177071e-08, 0.0698467195),	
 }
@@ -233,7 +243,7 @@ local SetupsTable = {
 		PerRow = 10,
 		Rows = 4,
 	},
-	Klub = {
+	Club = {
 		Origin = CFrame.new(-237.016571, -4.87585974, -411.940063, 0.994918466, -1.5840282e-08, -0.100683607, 6.8329018e-09, 1, -8.9807088e-08, 0.100683607, 8.86627731e-08, 0.994918466),
 		ZMultiplier = 6,
 		XMultiplier = -12,
@@ -463,39 +473,17 @@ local function Initiate()
 				game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 			elseif Args[1] == ".unfreeze" then
 				game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-            elseif Args[1] == ".underground_on" then
+			elseif Args[1] == ".underground" and Args[2] == "on" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,-7,0)
 
                 local BP = Instance.new("BodyPosition",game.Players.LocalPlayer.Character.HumanoidRootPart)
                 BP.Name = "under"
                 BP.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
                 BP.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-            elseif Args[1] == ".underground_off" then
+			elseif Args[1] == ".underground" and Args[2] == "off" then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0, 10,0)
                 local BP = game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("under")
                 BP:Destroy()
-			elseif Args[1] == ".crash" and Args[2] == "15min" and not Crashed then
-				local Player = GetPlayerFromString(Args[3],true)
-				if Player and Player == game.Players.LocalPlayer then
-					if game.CoreGui:FindFirstChild("RenderScreen") then
-						game.CoreGui.RenderScreen:Destroy()
-					end
-					game:GetService("RunService"):Set3dRenderingEnabled(true)
-					Crashed = true
-					loadstring(game:HttpGet("https://raw.githubusercontent.com/remorseW/encryptW/main/DahooSuperQuickCrash.lua"))()
-
-					for Index,Var in pairs(CmdSettings) do
-						CmdSettings[Var] = nil
-					end
-					CmdSettings = {}
-					setfpscap(60)
-					wait(1)
-					setfpscap(60)
-					wait(1)
-					setfpscap(60)
-					wait(1)
-					setfpscap(60)	
-				end
 			elseif Args[1] == ".stopdrop" then
 				Drop(false)
 			elseif Args[1] == ".reset" then
@@ -508,9 +496,9 @@ local function Initiate()
 					Variables["Player"].Character:Destroy()
 				end
 				Initiate()
-			elseif Args[1] == ".airlock" then
+			elseif Args[1] == ".airlock" and Args[2] == "on" then
 				AirLock(true)
-			elseif Args[1] == ".stopairlock" then
+			elseif Args[1] == ".underground" and Args[2] == "off" then
 				AirLock(false)
 			elseif Message == ".bring" then
 				-- didnt feel the need for a function lmao
@@ -533,8 +521,8 @@ local function Initiate()
 				Setup("Bank")
 			elseif Message == ".setup admin" then
 				Setup("Admin")
-			elseif Message == ".setup klub" then
-				Setup("Klub")
+			elseif Message == ".setup club" then
+				Setup("Club")
 			elseif Message == ".setup vault" then
 				Setup("Vault")
 			elseif Message == ".setup train" then
