@@ -1,0 +1,53 @@
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end -- wait until game has fully loaded
+
+if getgenv().AvoidCrashExecute:lower() == game:service"Players".LocalPlayer.Name:lower() then return end -- doesn't execute on the account that you added.
+
+repeat wait() until workspace.Players:FindFirstChild(game:service"Players".LocalPlayer.Name) -- waits until player has fully loaded
+
+game:service"StarterGui":SetCore("SendNotification",{
+    Title = "Script";
+    Text = "Script Activated";
+    Duration = 15;
+}) -- notifies that the script has been executed.
+
+local __namecall
+__namecall = hookmetamethod(game, "__namecall", function(...)
+    local args = {...}
+    local method = getnamecallmethod()
+    if (method == "FireServer" and args[1].Name == "MainEvent" and table.find({"CHECKER_1","CHECKER_2","TeleportDetect","OneMoreTime","BreathingHAMON","VirusCough","TimerMoney"}, args[2])) then
+        return
+    end
+    return __namecall(table.unpack(args))
+end) -- this basically blocks the anticheat and hourly cash check
+
+local function StartUP()
+    game:service"Players".LocalPlayer.Backpack.ChildAdded:Connect(function(child)
+        repeat wait(0.01) until child.Parent ~= nil
+        if child.Name:lower():find("debug") then -- this detects if you've been detected. can't do nothing if this fires.
+            game:service"StarterGui":SetCore("SendNotification",{
+                Title = "warning...";
+                Text = "if you see this message, bad news bc yo cash not getting reverted after crash. pls refrain from picking up cash ty - if this is ur main then ur fine";
+                Duration = 600;
+            })
+        elseif child:IsA("LocalScript") then -- the newest update that dahood added, they added a anticheat that goes into a your backpack and checks for body pos, and body gyros.
+            child.Disabled = true
+        end
+    end)
+end
+StartUP() -- inital start up
+game:service"Players".LocalPlayer.CharacterAdded:Connect(StartUP) -- restarts if you die
+
+for i,v in pairs(workspace.Ignored.Drop:GetChildren()) do -- destroys current ground cash clickdetectors
+    if v.Name:lower() == "moneydrop" then
+        v:FindFirstChildWhichIsA("ClickDetector"):Destroy()
+    end
+end
+workspace.Ignored.Drop.ChildAdded:Connect(function(child) -- destroys newest ground cash clickdetectors
+    repeat wait(0.01) until child.Parent ~= nil
+    if child.Name:lower() == "moneydrop" then
+        pcall(function() child:FindFirstChildWhichIsA("ClickDetector"):Destroy() end)
+    end
+end)
