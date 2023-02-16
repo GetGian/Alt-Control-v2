@@ -14,6 +14,8 @@ UserSettings().GameSettings.MasterVolume = 0
 local Crashed = false
 if Testing == false then
 	setfpscap(2)
+	
+	
 	main = Instance.new("ScreenGui")
 	Frame = Instance.new("Frame")
 	TextLabel = Instance.new("TextLabel")
@@ -59,6 +61,9 @@ if Testing == false then
 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v2/main/AC.lua"))()
+
+wait(.5)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v2/main/Anti-Revert"))()
 
 getgenv().Executed = true
 
