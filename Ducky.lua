@@ -2,7 +2,7 @@ local Testing = false
 
 if table.find(getgenv().Alts,game.Players.LocalPlayer.UserId) then
 	getgenv().PointInTable = table.find(getgenv().Alts,game.Players.LocalPlayer.UserId)
-	setfpscap(4) -- because sometimes the other setfpscap doesnt work on some accounts
+	setfpscap(2) -- because sometimes the other setfpscap doesnt work on some accounts
 	
 else
 	return
@@ -13,7 +13,7 @@ end
 UserSettings().GameSettings.MasterVolume = 0
 local Crashed = false
 if Testing == false then
-	setfpscap(4)
+	setfpscap(2)
 	main = Instance.new("ScreenGui")
 	Frame = Instance.new("Frame")
 	TextLabel = Instance.new("TextLabel")
@@ -55,7 +55,7 @@ if Testing == false then
 	end)
 	game:GetService("RunService"):Set3dRenderingEnabled(false)
 	game:GetService("RunService"):SetRobloxGuiFocused(false)
-	setfpscap(4) -- Another precaution
+	setfpscap(2) -- Another precaution
 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v2/main/AC.lua"))()
