@@ -61,10 +61,6 @@ if Testing == false then
 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v2/main/AC.lua"))()
-
-wait(.5)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/GetGian/Alt-Control-v2/main/Anti-Revert"))()
-
 getgenv().Executed = true
 
 
